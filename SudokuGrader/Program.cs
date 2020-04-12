@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SudokuGrader
 {
@@ -143,7 +144,24 @@ namespace SudokuGrader
 
         public static int[][] ValidateFileAndReadTo2DArray(string filePath)
         {
-            string[] fileLines = System.IO.File.ReadAllLines(filePath);
+            string[] fileLines;
+
+            try
+            {
+                fileLines = System.IO.File.ReadAllLines(filePath);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("Exception, sudoku file not found.");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception, could not read sudoku file.");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
 
             if (fileLines.Length != 9)
             {

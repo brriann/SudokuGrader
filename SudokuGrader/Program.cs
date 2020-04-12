@@ -53,10 +53,10 @@ namespace SudokuGrader
         }
 
         /// <summary>
-        ///  Validates "horizontal rows" of a 2D array for presence of 
+        ///  Validates "horizontal rows" of a 9x9 2D int array for no duplication of integers 
         /// </summary>
         /// <param name="sudokuBoard"></param>
-        /// <returns></returns>
+        /// <returns>True if no duplication exists</returns>
         public static bool ValidateRows(int[][] sudokuBoard)
         {
             for (int i = 0; i < 9; i++)
@@ -80,6 +80,11 @@ namespace SudokuGrader
             return true;
         }
 
+        /// <summary>
+        ///  Validates "vertical columns" of a 9x9 2D int array for no duplication of integers 
+        /// </summary>
+        /// <param name="sudokuBoard"></param>
+        /// <returns>True if no duplication exists</returns>
         public static bool ValidateColumns(int[][] sudokuBoard)
         {
             for (int i = 0; i < 9; i++)
@@ -103,6 +108,11 @@ namespace SudokuGrader
             return true;
         }
 
+        /// <summary>
+        ///  Validates 3x3 "magic squares" of a 9x9 2D int array for no duplication of integers 
+        /// </summary>
+        /// <param name="sudokuBoard"></param>
+        /// <returns>True if no duplication exists</returns>
         public static bool ValidateSquares(int[][] sudokuBoard)
         {
             IEnumerable<Tuple<int, int>> iBounds;
@@ -147,6 +157,11 @@ namespace SudokuGrader
             return true;
         }
 
+        /// <summary>
+        ///  Validates that a file contains 9 lines of 9 integers, and stores the file contents in a 9x9 2D int array.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>int[][] or null if errors</returns>
         public static int[][] ValidateFileAndReadTo2DArray(string filePath)
         {
             string[] fileLines;

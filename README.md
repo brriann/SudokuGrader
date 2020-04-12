@@ -3,7 +3,7 @@
 TO RUN:
 
 
-1. Clone this repo
+1. Clone this repo, open sln in VS, and build
 2. In powershell, navigate to directory inline with SudokuGrader.csproj 
 3. In powershell, invoke "dotnet run --project SudokuGrader.csproj C:\full\path\to\test\file.txt"
 

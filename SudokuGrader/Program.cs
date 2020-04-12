@@ -6,40 +6,93 @@ namespace SudokuGrader
     {
         static void Main(string[] args)
         {
-            string FILEPATH;
+            string filePath;
             int[][] sudokuBoard;
             bool validSudokuSolution;
 
             // use a file path if one was passed in.  else, use hardcoded file path.
             if (args.Length == 1)
             {
-                Console.WriteLine("reading filePath from CLI args");
-                FILEPATH = args[0];
+                // Won't validate for valid file path. System.IO.File.ReadAllLines would throw exception.
+                // placing call to ReadAllLines() in a try-catch structure would be ideal.
+                filePath = args[0];
             }
             else
             {
                 Console.WriteLine(@"usage: ./SudokuGrader C:\path\to\sudoku\txt\file.txt");
-                FILEPATH = @"C:\Development\SudokuGrader\TestFiles\sudoku.txt";
+                filePath = @"C:\Development\SudokuGrader\TestFiles\sudoku.txt";
             }
             
-            sudokuBoard = ValidateFileAndReadTo2DArray(FILEPATH);
+            sudokuBoard = ValidateFileAndReadTo2DArray(filePath);
 
+            // ideally, instead of a null return value, I'd try-catch to read file and return a meaningful exception.
             if (sudokuBoard == null)
             {
-                Console.WriteLine("Invalid file format. Expected a 9-line .txt file with 9 digits.");
+                // File was not parsed.
+                Console.WriteLine("No, invalid");
                 return;
             }
 
+            bool validRows = ValidateRows(sudokuBoard);
+            bool validColumns = ValidateColumns(sudokuBoard);
+            bool validSquares = ValidateSquares(sudokuBoard);
 
+            validSudokuSolution =  validRows && validColumns && validSquares;
+
+            // no return codes, just messaging.
+            if (validSudokuSolution)
+            {
+                Console.WriteLine("Yes, valid");
+            }
+            else
+            {
+                Console.WriteLine("No, invalid");
+            }
         }
 
         public static bool ValidateRows(int[][] sudokuBoard)
         {
+            for (int i = 0; i < 9; i++)
+            {
+                // store occurences of digits 1-9 in an array
+                // occurence of n stored at hasOccured[n - 1]
+                bool[] hasOccured = new bool[9];
+
+                for (int j = 0; j < 9; j++)
+                {
+                    if (hasOccured[sudokuBoard[i][j] - 1]) 
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        hasOccured[sudokuBoard[i][j] - 1] = true;
+                    }
+                }
+            }
             return true;
         }
 
         public static bool ValidateColumns(int[][] sudokuBoard)
         {
+            for (int i = 0; i < 9; i++)
+            {
+                // store occurences of digits 1-9 in an array
+                // occurence of n stored at hasOccured[n - 1]
+                bool[] hasOccured = new bool[9];
+
+                for (int j = 0; j < 9; j++)
+                {
+                    if (hasOccured[sudokuBoard[j][i] - 1])
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        hasOccured[sudokuBoard[j][i] - 1] = true;
+                    }
+                }
+            }
             return true;
         }
 

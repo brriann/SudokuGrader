@@ -21,7 +21,7 @@ If any code that appears is a "dealbreaker", please let me know, and I can provi
 
 General:
 
-I chose not to write automated tests due to time.
+I chose not to write automated tests due to time.  Instead, I relied on test files for a manual integration test strategy.
 
 Some validation of the "rules of Sudoku" occur implicitly:
 

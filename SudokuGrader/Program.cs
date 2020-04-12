@@ -52,6 +52,11 @@ namespace SudokuGrader
             }
         }
 
+        /// <summary>
+        ///  Validates "horizontal rows" of a 2D array for presence of 
+        /// </summary>
+        /// <param name="sudokuBoard"></param>
+        /// <returns></returns>
         public static bool ValidateRows(int[][] sudokuBoard)
         {
             for (int i = 0; i < 9; i++)

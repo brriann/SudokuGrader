@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SudokuGrader
 {
@@ -13,7 +14,7 @@ namespace SudokuGrader
             // use a file path if one was passed in.  else, use hardcoded file path.
             if (args.Length == 1)
             {
-                // Won't validate for valid file path. System.IO.File.ReadAllLines would throw exception.
+                // won't validate for valid file path. System.IO.File.ReadAllLines would throw exception.
                 // placing call to ReadAllLines() in a try-catch structure would be ideal.
                 filePath = args[0];
             }
@@ -25,10 +26,10 @@ namespace SudokuGrader
             
             sudokuBoard = ValidateFileAndReadTo2DArray(filePath);
 
-            // ideally, instead of a null return value, I'd try-catch to read file and return a meaningful exception.
+            // null return value is not ideal.
             if (sudokuBoard == null)
             {
-                // File was not parsed.
+                // file was not parsed correctly.
                 Console.WriteLine("No, invalid");
                 return;
             }
@@ -98,6 +99,45 @@ namespace SudokuGrader
 
         public static bool ValidateSquares(int[][] sudokuBoard)
         {
+            IEnumerable<Tuple<int, int>> iBounds;
+            IEnumerable<Tuple<int, int>> jBounds;
+
+            iBounds = jBounds = new List<Tuple<int, int>>
+            {
+                new Tuple<int, int>(0, 2),
+                new Tuple<int, int>(3, 5),
+                new Tuple<int, int>(6, 8)
+            };
+
+            // Quadruple nested iterations or ~O(N^4)!
+            // However, we know that each level of iteration is limited to 3 elements.
+            // In this case, accessing each of the 9 "magic squares" is unavoidable to validate each region of the sudoko board.
+            // Accessing each  of the 9 elements in each "magic square" for occurence validation is also unavoidable.
+            // The run time for this is O(N^4) where N = 3.
+            // This algorithm will never run on truly large datasets.
+
+            foreach (Tuple<int, int> iBoundPair in iBounds)
+            {
+                foreach (Tuple<int, int> jBoundPair in jBounds)
+                {
+                    bool[] hasOccured = new bool[9];
+
+                    for (int i = iBoundPair.Item1; i <= iBoundPair.Item2; i++)
+                    {
+                        for (int j = jBoundPair.Item1; j <= jBoundPair.Item2; j++)
+                        {
+                            if (hasOccured[sudokuBoard[i][j] - 1])
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                hasOccured[sudokuBoard[i][j] - 1] = true;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
 

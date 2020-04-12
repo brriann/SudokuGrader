@@ -20,7 +20,7 @@ namespace SudokuGrader
             }
             else
             {
-                Console.WriteLine(@"usage: ./SudokuGrader C:\path\to\sudoku\txt\file.txt");
+                Console.WriteLine(@"usage: dotnet run --project SudokuGrader.csproj C:\path\to\sudoku\txt\file.txt");
                 filePath = @"C:\Development\SudokuGrader\TestFiles\sudoku.txt";
             }
             

@@ -22,6 +22,8 @@ namespace SudokuGrader
             else
             {
                 Console.WriteLine(@"usage: dotnet run --project SudokuGrader.csproj C:\path\to\sudoku\txt\file.txt");
+
+                // this is hardcoded for my dev environment.  if run in an evaluator's environment, FileNotFound exception will likely throw.
                 filePath = @"C:\Development\SudokuGrader\TestFiles\sudoku.txt";
             }
             
